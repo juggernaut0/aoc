@@ -14,6 +14,7 @@ macro_rules! answer_tests {
         $crate::answers::paste! {
             #[test]
             fn [<day_ $day _part_1>]() {
+                use $crate::Solution;
                 $crate::init_test_logging();
                 let Some(expected) = $crate::answers::read_answer($day, 0) else { return };
                 let input = $crate::read_input($day, "1");
@@ -23,6 +24,7 @@ macro_rules! answer_tests {
 
             #[test]
             fn [<day_ $day _part_2>]() {
+                use $crate::Solution;
                 $crate::init_test_logging();
                 let Some(expected) = $crate::answers::read_answer($day, 1) else { return };
                 let input = $crate::read_input($day, "2");
@@ -36,17 +38,15 @@ macro_rules! answer_tests {
 #[macro_export]
 macro_rules! generate_answer_tests {
     ($solutions:expr) => {
-        use $crate::Solution;
-
-        $crate::answer_tests!($solutions, 1);
-        $crate::answer_tests!($solutions, 2);
-        $crate::answer_tests!($solutions, 3);
-        $crate::answer_tests!($solutions, 4);
-        $crate::answer_tests!($solutions, 5);
-        $crate::answer_tests!($solutions, 6);
-        $crate::answer_tests!($solutions, 7);
-        $crate::answer_tests!($solutions, 8);
-        $crate::answer_tests!($solutions, 9);
+        $crate::answer_tests!($solutions, 01);
+        $crate::answer_tests!($solutions, 02);
+        $crate::answer_tests!($solutions, 03);
+        $crate::answer_tests!($solutions, 04);
+        $crate::answer_tests!($solutions, 05);
+        $crate::answer_tests!($solutions, 06);
+        $crate::answer_tests!($solutions, 07);
+        $crate::answer_tests!($solutions, 08);
+        $crate::answer_tests!($solutions, 09);
         $crate::answer_tests!($solutions, 10);
         $crate::answer_tests!($solutions, 11);
         $crate::answer_tests!($solutions, 12);

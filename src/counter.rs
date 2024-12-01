@@ -35,13 +35,43 @@ impl<T: Hash + Eq, C: Add<Output = C> + Default + Copy + Eq> Counter<T, C> {
     pub fn is_empty(&self) -> bool {
         self.counts.is_empty() || self.counts.values().all(|v| v == &C::default())
     }
-}
 
-impl<T: Hash + Eq> Counter<T, u64> {
-    pub fn count(&mut self, k: T) -> u64 {
-        self.count_n(k, 1)
+    pub fn get(&self, k: &T) -> C {
+        self.counts.get(k).copied().unwrap_or_default()
     }
 }
+
+macro_rules! int_impl {
+    ($ty: ty) => {
+        impl<T: Hash + Eq> Counter<T, $ty> {
+            pub fn count(&mut self, k: T) -> $ty {
+                self.count_n(k, 1)
+            }
+        }
+
+        impl<T: Hash + Eq> FromIterator<T> for Counter<T, $ty> {
+            fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
+                let mut counter = Counter::<_, $ty>::new();
+                for item in iter {
+                    counter.count(item);
+                }
+                counter
+            }
+        }
+    };
+}
+int_impl!(u8);
+int_impl!(u16);
+int_impl!(u32);
+int_impl!(u64);
+int_impl!(u128);
+int_impl!(usize);
+int_impl!(i8);
+int_impl!(i16);
+int_impl!(i32);
+int_impl!(i64);
+int_impl!(i128);
+int_impl!(isize);
 
 impl<T: Debug, C: Debug> Debug for Counter<T, C> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

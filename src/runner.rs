@@ -1,5 +1,6 @@
 use clap::{crate_name, Arg, Command};
 use log::Level;
+use std::path::Path;
 use std::time::Instant;
 
 #[allow(clippy::missing_panics_doc)]
@@ -69,11 +70,17 @@ If the input file is not found within the input folder
  */
 pub fn read_input(day: usize, puzzle: &str) -> String {
     let dss = format!("input/{day}-{puzzle}.txt");
-    let ds = std::path::Path::new(&dss);
+    let ds = Path::new(&dss);
     if ds.exists() {
         std::fs::read_to_string(ds).unwrap()
     } else {
-        std::fs::read_to_string(format!("input/{day}.txt")).unwrap()
+        let path_string = format!("input/{day}.txt");
+        let path = Path::new(&path_string);
+        if path.exists() {
+            std::fs::read_to_string(path).unwrap()
+        } else {
+            panic!("Input file not found: {dss}");
+        }
     }
 }
 
