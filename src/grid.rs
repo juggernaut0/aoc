@@ -3,6 +3,7 @@ use std::fmt::{Debug, Formatter};
 use std::ops::{Index, IndexMut};
 use std::str::FromStr;
 
+#[derive(Clone)]
 pub struct Grid<T> {
     data: Vec<Vec<T>>,
 }
@@ -29,12 +30,33 @@ impl<T> Grid<T> {
         Grid { data }
     }
 
+    /**
+    Builds a new grid initialized to the given element
+
+    # Panics
+
+    Panics if width or height are negative
+    */
+    pub fn from_elem(width: i32, height: i32, elem: T) -> Grid<T>
+    where
+        T: Clone,
+    {
+        let width_size = width.try_into().unwrap();
+        let height_size = height.try_into().unwrap();
+        let data = vec![vec![elem; width_size]; height_size];
+        Grid { data }
+    }
+
     pub fn width(&self) -> i32 {
         self.data[0].len().try_into().unwrap_or(i32::MAX)
     }
 
     pub fn height(&self) -> i32 {
         self.data.len().try_into().unwrap_or(i32::MAX)
+    }
+
+    pub fn contains_point(&self, p: Point) -> bool {
+        p.0 >= 0 && p.1 >= 0 && p.0 < self.width() && p.1 < self.height()
     }
 
     pub fn get(&self, p: Point) -> Option<&T> {
