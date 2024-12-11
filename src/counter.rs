@@ -39,6 +39,10 @@ impl<T: Hash + Eq, C: Add<Output = C> + Default + Copy + Eq> Counter<T, C> {
     pub fn get(&self, k: &T) -> C {
         self.counts.get(k).copied().unwrap_or_default()
     }
+
+    pub fn total(&self) -> C {
+        self.counts.values().copied().fold(C::default(), Add::add)
+    }
 }
 
 macro_rules! int_impl {
