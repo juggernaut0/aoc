@@ -1,5 +1,5 @@
 use std::fmt::{Debug, Display, Formatter};
-use std::ops::{Add, Mul, Sub};
+use std::ops::{Add, AddAssign, Mul, Sub};
 
 #[derive(Copy, Clone, Hash, PartialEq, Eq)]
 pub struct Point<T = i32>(pub T, pub T);
@@ -64,6 +64,13 @@ impl<T: Add<Output = T>> Add for Point<T> {
 
     fn add(self, rhs: Self) -> Self::Output {
         Point(self.0 + rhs.0, self.1 + rhs.1)
+    }
+}
+
+impl<T: AddAssign> AddAssign for Point<T> {
+    fn add_assign(&mut self, rhs: Self) {
+        self.0 += rhs.0;
+        self.1 += rhs.1;
     }
 }
 

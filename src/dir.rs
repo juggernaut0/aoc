@@ -39,6 +39,11 @@ impl Dir {
             Dir::W => Point(-1, 0),
         }
     }
+
+    #[must_use]
+    pub fn all() -> [Dir; 4] {
+        [Dir::N, Dir::E, Dir::S, Dir::W]
+    }
 }
 
 #[allow(clippy::module_name_repetitions)]
@@ -83,5 +88,14 @@ impl DirSet {
 impl Default for DirSet {
     fn default() -> Self {
         DirSet::new()
+    }
+}
+
+impl IntoIterator for DirSet {
+    type Item = Dir;
+    type IntoIter = std::vec::IntoIter<Dir>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        Dir::all().into_iter().filter(|&d| self.contains(d)).collect::<Vec<_>>().into_iter()
     }
 }
