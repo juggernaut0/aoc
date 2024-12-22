@@ -100,3 +100,11 @@ impl<T, C> IntoIterator for Counter<T, C> {
         self.counts.into_iter()
     }
 }
+
+impl<T: Hash + Eq, C: Add<Output = C> + Default + Copy + Eq> Extend<(T, C)> for Counter<T, C> {
+    fn extend<I: IntoIterator<Item = (T, C)>>(&mut self, iter: I) {
+        for (t, c) in iter {
+            self.count_n(t, c);
+        }
+    }
+}

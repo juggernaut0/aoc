@@ -96,6 +96,10 @@ impl IntoIterator for DirSet {
     type IntoIter = std::vec::IntoIter<Dir>;
 
     fn into_iter(self) -> Self::IntoIter {
-        Dir::all().into_iter().filter(|&d| self.contains(d)).collect::<Vec<_>>().into_iter()
+        Dir::all()
+            .into_iter()
+            .filter(|&d| self.contains(d))
+            .collect::<Vec<_>>()
+            .into_iter()
     }
 }

@@ -46,6 +46,7 @@ impl<S: Searchable> PartialEq for KeyWithItem<S> {
 
 impl<S: Searchable> Eq for KeyWithItem<S> {}
 
+// finds the end state with the highest value
 pub fn search<S: Searchable>(search: &S) -> Option<(S::State, S::Value)> {
     let initial_state = search.initial_state();
     let break_on_goal = S::break_on_goal();
