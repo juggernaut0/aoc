@@ -7,13 +7,13 @@ pub struct Counter<T, C = u64> {
     counts: HashMap<T, C>,
 }
 
-impl<T, C> Counter<T, C> {
-    pub fn new() -> Counter<T, C> {
-        Counter {
-            counts: HashMap::new(),
-        }
+impl<T> Counter<T> {
+    pub fn new() -> Counter<T> {
+        Counter::default()
     }
+}
 
+impl<T, C> Counter<T, C> {
     pub fn iter(&self) -> std::collections::hash_map::Iter<T, C> {
         self.counts.iter()
     }
@@ -21,7 +21,9 @@ impl<T, C> Counter<T, C> {
 
 impl<T, C> Default for Counter<T, C> {
     fn default() -> Self {
-        Counter::new()
+        Counter {
+            counts: HashMap::new(),
+        }
     }
 }
 
@@ -55,7 +57,7 @@ macro_rules! int_impl {
 
         impl<T: Hash + Eq> FromIterator<T> for Counter<T, $ty> {
             fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
-                let mut counter = Counter::<_, $ty>::new();
+                let mut counter = Counter::<_, $ty>::default();
                 for item in iter {
                     counter.count(item);
                 }
