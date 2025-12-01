@@ -63,17 +63,17 @@ pub fn search<S: Searchable>(search: &S) -> Option<(S::State, S::Value)> {
     while let Some((KeyWithItem(key, s), value_est)) = q.pop() {
         log::debug!("checking {s:?}, estimate {value_est:?}");
 
-        if let Some((_, best_v)) = best.as_ref() {
-            if &value_est <= best_v {
-                continue;
-            }
+        if let Some((_, best_v)) = best.as_ref()
+            && &value_est <= best_v
+        {
+            continue;
         }
 
         let value = search.value(&s);
-        if let Some(prev_value) = seen.get(&key) {
-            if prev_value >= &value {
-                continue;
-            }
+        if let Some(prev_value) = seen.get(&key)
+            && prev_value >= &value
+        {
+            continue;
         }
 
         if search.is_goal(&s) {

@@ -1,4 +1,4 @@
-use clap::{crate_name, Arg, Command};
+use clap::{Arg, Command, crate_name};
 use log::Level;
 use std::path::Path;
 use std::time::Instant;
