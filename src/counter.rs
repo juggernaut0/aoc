@@ -14,7 +14,7 @@ impl<T> Counter<T> {
 }
 
 impl<T, C> Counter<T, C> {
-    pub fn iter(&self) -> std::collections::hash_map::Iter<T, C> {
+    pub fn iter(&self) -> std::collections::hash_map::Iter<'_, T, C> {
         self.counts.iter()
     }
 }

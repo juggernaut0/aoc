@@ -4,12 +4,12 @@ use std::path::Path;
 use std::time::Instant;
 
 #[allow(clippy::missing_panics_doc)]
-pub fn run(year: &'static str, solutions: [&dyn Solution; 25]) {
+pub fn run<const N: usize>(year: &'static str, solutions: [&dyn Solution; N]) {
     let matches = Command::new(crate_name!())
         .about(format!("Advent of Code {year}"))
         .arg(
             Arg::new("day")
-                .value_parser(clap::value_parser!(u32).range(1..=25))
+                .value_parser(clap::value_parser!(u32).range(1..=N.try_into().unwrap()))
                 .required(true),
         )
         .arg(Arg::new("puzzle").value_parser(["1", "2"]))
