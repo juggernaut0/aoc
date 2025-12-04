@@ -1,4 +1,5 @@
 pub use paste::paste;
+pub use seq_macro::seq;
 
 pub fn read_answer(day: usize, puzzle: usize) -> Option<String> {
     std::fs::read_to_string(format!("answers/{day}.txt"))
@@ -37,31 +38,10 @@ macro_rules! answer_tests {
 
 #[macro_export]
 macro_rules! generate_answer_tests {
-    ($solutions:expr) => {
-        $crate::answer_tests!($solutions, 01);
-        $crate::answer_tests!($solutions, 02);
-        $crate::answer_tests!($solutions, 03);
-        $crate::answer_tests!($solutions, 04);
-        $crate::answer_tests!($solutions, 05);
-        $crate::answer_tests!($solutions, 06);
-        $crate::answer_tests!($solutions, 07);
-        $crate::answer_tests!($solutions, 08);
-        $crate::answer_tests!($solutions, 09);
-        $crate::answer_tests!($solutions, 10);
-        $crate::answer_tests!($solutions, 11);
-        $crate::answer_tests!($solutions, 12);
-        $crate::answer_tests!($solutions, 13);
-        $crate::answer_tests!($solutions, 14);
-        $crate::answer_tests!($solutions, 15);
-        $crate::answer_tests!($solutions, 16);
-        $crate::answer_tests!($solutions, 17);
-        $crate::answer_tests!($solutions, 18);
-        $crate::answer_tests!($solutions, 19);
-        $crate::answer_tests!($solutions, 20);
-        $crate::answer_tests!($solutions, 21);
-        $crate::answer_tests!($solutions, 22);
-        $crate::answer_tests!($solutions, 23);
-        $crate::answer_tests!($solutions, 24);
-        $crate::answer_tests!($solutions, 25);
+    ($solutions:expr) => { generate_answer_tests!($solutions, 25) };
+    ($solutions:expr, $num:literal) => {
+        $crate::answers::seq!(N in 1..=$num {
+            $crate::answer_tests!($solutions, N);
+        });
     };
 }

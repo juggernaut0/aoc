@@ -8,8 +8,5 @@ clap = { version = "4.5.53", features = ["cargo"] }
 log = "0.4.28"
 paste = "1.0.15"
 priority-queue = "2.7.0"
+seq-macro = "0.3.6"
 simple_logger = "5.1.0"
-
-# TODO move test generation to a separate crate that can be included as a dev-dependency
-#[dev-dependencies]
-#seq-macro = "0.3.6"
