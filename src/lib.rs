@@ -8,11 +8,13 @@ mod grid;
 mod point;
 mod runner;
 mod search;
+mod point3d;
 
 pub use counter::*;
 pub use dir::*;
 pub use grid::*;
 pub use point::*;
+pub use point3d::*;
 pub use runner::*;
 pub use search::*;
 use std::fmt::Debug;

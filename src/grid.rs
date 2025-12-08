@@ -48,6 +48,9 @@ impl<T> Grid<T> {
     }
 
     pub fn width(&self) -> i32 {
+        if self.data.is_empty() {
+            return 0;
+        }
         self.data[0].len().try_into().unwrap_or(i32::MAX)
     }
 
