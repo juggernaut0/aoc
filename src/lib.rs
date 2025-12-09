@@ -59,9 +59,7 @@ pub fn lcm(a: u64, b: u64) -> u64 {
 }
 
 pub fn pairs_without_dups<T>(a: &[T]) -> impl Iterator<Item = (&T, &T)> {
-    a.iter().enumerate().flat_map(move |(i, x)| {
-        a[(i+1)..]
-            .iter()
-            .map(move |y| (x, y))
-    })
+    a.iter()
+        .enumerate()
+        .flat_map(move |(i, x)| a[(i + 1)..].iter().map(move |y| (x, y)))
 }

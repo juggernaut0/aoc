@@ -1,5 +1,7 @@
+use std::borrow::Cow;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Add, AddAssign, Mul, Sub};
+use std::str::FromStr;
 
 #[derive(Copy, Clone, Hash, PartialEq, Eq)]
 pub struct Point<T = i32>(pub T, pub T);
@@ -99,5 +101,30 @@ impl<T: Display> Display for Point<T> {
 impl<T: Display> Debug for Point<T> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{self}")
+    }
+}
+
+impl<T: FromStr<Err = E>, E: Debug> FromStr for Point<T> {
+    type Err = Cow<'static, str>;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        // strip optional parentheses
+        let parts_str = s
+            .strip_prefix('(')
+            .unwrap_or(s)
+            .strip_suffix(')')
+            .unwrap_or(s);
+        let parts = parts_str.split_once(',').ok_or("no comma")?;
+        let x = parts
+            .0
+            .trim()
+            .parse()
+            .map_err(|e| format!("failed to parse x: {e:?}"))?;
+        let y = parts
+            .1
+            .trim()
+            .parse()
+            .map_err(|e| format!("failed to parse y: {e:?}"))?;
+        Ok(Point(x, y))
     }
 }
