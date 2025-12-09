@@ -6,9 +6,9 @@ mod counter;
 mod dir;
 mod grid;
 mod point;
+mod point3d;
 mod runner;
 mod search;
-mod point3d;
 
 pub use counter::*;
 pub use dir::*;

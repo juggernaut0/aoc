@@ -8,10 +8,11 @@ impl Point3D {
         Point3D(0, 0, 0)
     }
 
-    pub fn dist(&self, other: Point3D) -> i64 {
-        ((self.0 - other.0).pow(2)
-            + (self.1 - other.1).pow(2)
-            + (self.2 - other.2).pow(2)).isqrt()
+    pub fn sq_dist(&self, other: Point3D) -> i64 {
+        let dx = self.0 - other.0;
+        let dy = self.1 - other.1;
+        let dz = self.2 - other.2;
+        dx * dx + dy * dy + dz * dz
     }
 }
 
