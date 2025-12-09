@@ -57,3 +57,11 @@ pub fn gcd(mut a: u64, mut b: u64) -> u64 {
 pub fn lcm(a: u64, b: u64) -> u64 {
     (a * b) / gcd(a, b)
 }
+
+pub fn pairs_without_dups<T>(a: &[T]) -> impl Iterator<Item = (&T, &T)> {
+    a.iter().enumerate().flat_map(move |(i, x)| {
+        a[(i+1)..]
+            .iter()
+            .map(move |y| (x, y))
+    })
+}

@@ -1,5 +1,5 @@
 use crate::Point;
-use std::fmt::{Debug, Formatter};
+use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Index, IndexMut};
 use std::str::FromStr;
 
@@ -108,6 +108,18 @@ impl<T: Debug> Debug for Grid<T> {
         for row in &self.data {
             for t in row {
                 write!(f, "{t:?}")?;
+            }
+            writeln!(f)?;
+        }
+        Ok(())
+    }
+}
+
+impl Display for Grid<char> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        for row in &self.data {
+            for t in row {
+                write!(f, "{t}")?;
             }
             writeln!(f)?;
         }
