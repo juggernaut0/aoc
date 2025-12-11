@@ -1,8 +1,10 @@
+use std::borrow::Borrow;
 use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
 use std::hash::Hash;
 use std::ops::Add;
 
+#[derive(Clone)]
 pub struct Counter<T, C = u64> {
     counts: HashMap<T, C>,
 }
@@ -38,7 +40,10 @@ impl<T: Hash + Eq, C: Add<Output = C> + Default + Copy + Eq> Counter<T, C> {
         self.counts.is_empty() || self.counts.values().all(|v| v == &C::default())
     }
 
-    pub fn get(&self, k: &T) -> C {
+    pub fn get<Q: Hash + Eq + ?Sized>(&self, k: &Q) -> C
+    where
+        T: Borrow<Q>,
+    {
         self.counts.get(k).copied().unwrap_or_default()
     }
 
